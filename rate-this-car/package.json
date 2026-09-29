@@ -1,0 +1,17 @@
+{
+  "name": "rate-this-car",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rate the driver in front of you. Snap the plate, give stars, no account needed.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test --test-concurrency=1 \"test/*.test.js\"",
+    "vendor": "npm install --no-save onnxruntime-web@1.30.0 && node scripts/vendor-ort.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.144.0"
+  },
+  "license": "MIT"
+}

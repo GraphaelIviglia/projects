@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Rate This Car</title>
+  <meta name="description" content="Rate the driver in front of you. Snap the plate, give stars. No account needed.">
+  <meta name="theme-color" content="#0f1b3d">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Rate This Car">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rate This Car">
+  <meta property="og:description" content="Rate the driver in front of you. Snap the plate, give stars. No account needed.">
+  <meta property="og:image" content="icons/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/app.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/">
+      <img src="icons/icon.svg" alt="" width="30" height="30">
+      <span>Rate This Car</span>
+    </a>
+    <label class="picker lang-picker">
+      <span class="sr-only" data-i18n="language">Language</span>
+      <span class="picker-face" aria-hidden="true"><span class="globe">🌐</span> <span id="lang-face">EN</span></span>
+      <select id="lang-select"></select>
+    </label>
+  </header>
+
+  <main>
+    <section id="view-home" class="view">
+      <div class="hero">
+        <h1 data-i18n="tagline">Rate the driver in front of you.</h1>
+        <p data-i18n="subtitle">Snap the plate, give stars. No account needed.</p>
+      </div>
+
+      <div class="card capture">
+        <label class="btn btn-primary btn-xl photo-btn">
+          <input type="file" accept="image/*" capture="environment" id="camera-input" class="visually-hidden">
+          <span aria-hidden="true" class="btn-icon">📷</span>
+          <span data-i18n="takePhoto">Take a photo of the car</span>
+        </label>
+        <label class="btn btn-secondary photo-btn">
+          <input type="file" accept="image/*" id="gallery-input" class="visually-hidden">
+          <span aria-hidden="true" class="btn-icon">🖼️</span>
+          <span data-i18n="choosePhoto">Choose a photo</span>
+        </label>
+        <button type="button" class="link demo-link" id="demo-btn" data-i18n="tryDemo">No car around? Try a sample photo</button>
+
+        <p class="safety" role="note">
+          <span aria-hidden="true" class="safety-icon">🚫📱</span>
+          <span data-i18n="safety"></span>
+        </p>
+
+        <div id="scan" class="scan" hidden>
+          <img id="scan-preview" class="scan-preview" alt="" hidden>
+          <p id="scan-status" class="scan-status" role="status"></p>
+          <div id="scan-progress" class="progress" hidden><span></span></div>
+          <div id="scan-others" class="others" hidden></div>
+        </div>
+
+        <div class="divider"><span data-i18n="orType">or type the plate</span></div>
+
+        <form id="plate-form" class="plate-form" novalidate>
+          <div class="plate-row">
+            <label class="picker country-picker">
+              <span class="sr-only" data-i18n="countryLabel">Country</span>
+              <span class="picker-face" aria-hidden="true"><span id="country-flag"></span> <b id="country-code"></b></span>
+              <select id="country-select"></select>
+            </label>
+            <label class="plate-input-wrap">
+              <span class="sr-only" data-i18n="plateLabel">Licence plate</span>
+              <input id="plate-input" class="plate-input" autocomplete="off" autocapitalize="characters"
+                     autocorrect="off" spellcheck="false" maxlength="16" enterkeyhint="go"
+                     data-i18n-placeholder="platePlaceholder">
+            </label>
+          </div>
+          <p id="plate-error" class="field-error" role="alert" hidden></p>
+          <button class="btn btn-dark btn-lg" type="submit" id="go-btn">
+            <span data-i18n="go">Continue</span> <span aria-hidden="true">→</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section id="view-car" class="view" hidden>
+      <div class="car-head">
+        <a href="#/" class="back" data-i18n-aria-label="back"><span aria-hidden="true">←</span></a>
+        <div id="car-plate" class="plate"></div>
+      </div>
+      <img id="car-preview" class="car-preview" alt="" hidden>
+
+      <div id="summary" class="card summary" aria-live="polite"></div>
+
+      <form id="rate-form" class="card rate" novalidate>
+        <h2 data-i18n="yourRating">Your rating</h2>
+        <div id="stars-input" class="stars-input" role="radiogroup"></div>
+        <p id="star-label" class="star-label" aria-live="polite"></p>
+        <div id="rate-details" hidden>
+          <p class="section-label" data-i18n="whatHappened">What happened? (optional)</p>
+          <div id="chips" class="chips"></div>
+          <label class="comment-wrap">
+            <span class="sr-only" data-i18n="commentPlaceholder">Add a comment (optional)</span>
+            <textarea id="comment" rows="2" maxlength="200" data-i18n-placeholder="commentPlaceholder"></textarea>
+          </label>
+          <div class="counter"><span id="comment-count">0</span>/200</div>
+          <p id="rate-error" class="field-error" role="alert" hidden></p>
+          <button type="submit" id="publish-btn" class="btn btn-primary btn-lg" data-i18n="publish">Publish my rating</button>
+          <p class="fine" data-i18n="fairUse"></p>
+        </div>
+      </form>
+
+      <div id="rate-done" class="card done" hidden>
+        <p class="done-msg"><span aria-hidden="true">✅</span> <span id="done-text"></span></p>
+        <a href="#/" class="btn btn-primary btn-lg" data-i18n="rateAnother">Rate another car</a>
+        <button type="button" class="btn btn-secondary share-btn" data-i18n="share">Share the app</button>
+      </div>
+
+      <section id="recent" class="recent" hidden>
+        <h2 data-i18n="recent">Recent ratings</h2>
+        <ul id="ratings-list" class="ratings"></ul>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p id="stats" class="stats" hidden></p>
+    <nav class="footer-links">
+      <button type="button" class="link" id="about-btn" data-i18n="about">About &amp; privacy</button>
+      <button type="button" class="link share-btn" data-i18n="share">Share the app</button>
+      <button type="button" class="link" id="install-btn" data-i18n="install" hidden>Install the app</button>
+    </nav>
+  </footer>
+
+  <dialog id="about-dialog" class="dialog">
+    <form method="dialog" class="dialog-close">
+      <button class="icon-btn" data-i18n-aria-label="close"><span aria-hidden="true">✕</span></button>
+    </form>
+    <div id="about-body"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
