@@ -291,7 +291,7 @@ async function scanPhoto(file) {
   $('#scan-preview').hidden = true;
   showError('#plate-error', '');
   setScan(readerReady ? 'readingPlate' : 'loadingReader', {}, null);
-  $('#scan').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  $('#scan').scrollIntoView({ block: 'center' });
   onReaderProgress = (fraction) => {
     if (id !== scanId || readerReady) return;
     if (fraction == null) setScan('loadingReader', {}, null);
@@ -669,7 +669,7 @@ async function submitRating(event) {
       state.car.data = data;
       renderCarData();
       showDone('thanks');
-      $('#rate-done').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      $('#rate-done').scrollIntoView({ block: 'center' });
     }
   } catch (err) {
     if (err.code === 'already_rated') {

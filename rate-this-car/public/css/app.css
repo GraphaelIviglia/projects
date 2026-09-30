@@ -236,11 +236,6 @@ textarea {
   text-decoration: none;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.08s ease, filter 0.15s ease;
-}
-
-.btn:active {
-  transform: translateY(1px) scale(0.99);
 }
 
 .btn:disabled {
@@ -342,20 +337,10 @@ textarea {
   height: 100%;
   width: var(--p, 35%);
   background: var(--accent-strong);
-  transition: width 0.2s ease;
 }
 
-.progress.indeterminate span {
-  animation: slide 1.1s ease-in-out infinite;
-}
-
-@keyframes slide {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(300%);
-  }
+.progress.indeterminate {
+  display: none;
 }
 
 .others {
@@ -644,15 +629,10 @@ textarea {
   font-size: 2.7rem;
   line-height: 1;
   cursor: pointer;
-  transition: transform 0.1s ease, color 0.1s ease;
 }
 
 .star.on {
   color: var(--star);
-}
-
-.star:active {
-  transform: scale(1.18);
 }
 
 .star-label {
@@ -923,11 +903,4 @@ textarea {
   color: #fff;
   font-weight: 650;
   box-shadow: 0 8px 30px rgb(0 0 0 / 25%);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    animation: none !important;
-  }
 }
